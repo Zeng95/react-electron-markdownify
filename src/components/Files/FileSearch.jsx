@@ -1,5 +1,12 @@
-import { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { useState, useEffect, useRef } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
+
+const StyledFileSearch = styled.div`
+  height: 72px;
+`
 
 function FileSearch({ title, onFileSearch }) {
   const [searchValue, setSearchValue] = useState('')
@@ -11,6 +18,7 @@ function FileSearch({ title, onFileSearch }) {
   }
 
   function hideSearch() {
+    setSearchValue('')
     setSearchVisible(false)
   }
 
@@ -26,7 +34,6 @@ function FileSearch({ title, onFileSearch }) {
         onFileSearch(searchValue)
       } else if (keyCode === 27 && searchVisible) {
         hideSearch()
-        setSearchValue('')
       }
     }
 
@@ -44,53 +51,44 @@ function FileSearch({ title, onFileSearch }) {
   })
 
   return (
-    <div className="file-search alert alert-primary">
+    <StyledFileSearch className="alert alert-primary d-flex justify-content-between align-items-center">
       {!searchVisible && (
-        <div className="d-flex justify-content-between align-items-center">
+        <>
+          {/* Title */}
           <span>{title}</span>
 
           {/* Search Button */}
-          <button
-            type="button"
-            className="btn btn-primary btn-search"
-            onClick={showSearch}
-          >
-            搜索
+          <button type="button" onClick={showSearch}>
+            <FontAwesomeIcon title="搜索" icon={faSearch} size="lg" />
           </button>
-        </div>
+        </>
       )}
 
       {searchVisible && (
-        <div className="row">
+        <>
           {/* Search Input */}
-          <div className="col-9">
-            <input
-              type="search"
-              className="form-control"
-              ref={inputElem}
-              value={searchValue}
-              onChange={handleSearchChange}
-            />
-          </div>
+          <input
+            type="search"
+            className="form-control mr-4"
+            ref={inputElem}
+            value={searchValue}
+            onChange={handleSearchChange}
+          />
 
           {/* Close Button */}
-          <div className="col-3 d-flex justify-content-center align-items-center">
-            <button
-              type="button"
-              className="btn btn-primary btn-close"
-              onClick={hideSearch}
-            ></button>
-          </div>
-        </div>
+          <button type="button" onClick={hideSearch}>
+            <FontAwesomeIcon title="关闭" icon={faTimes} size="lg" />
+          </button>
+        </>
       )}
-    </div>
+    </StyledFileSearch>
   )
 }
 
 FileSearch.propTypes = {
   title: PropTypes.string,
   onFileSearch: PropTypes.func.isRequired
-};
+}
 
 FileSearch.defaultProps = {
   title: '我的云文档'

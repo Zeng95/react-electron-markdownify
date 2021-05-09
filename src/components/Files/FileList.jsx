@@ -1,16 +1,13 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import FileItem from './FileItem'
 
 function FileList({ files }) {
   return (
-    <div className="file-list">
-      <ul className="list-group">
-        {files.map((file) => {
-          return <FileItem file={file} key={file.id} />
-        })}
-      </ul>
-    </div>
+    <ul className="list-group list-group-flush">
+      {files.map((file) => {
+        return <FileItem file={file} key={file.id} />
+      })}
+    </ul>
   )
 }
 

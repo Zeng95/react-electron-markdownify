@@ -3,14 +3,13 @@ import FileSearch from '@components/Files/FileSearch'
 import FileList from '@components/Files/FileList';
 import defaultFiles from '@utils/defaultFiles';
 
-import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (
     <div className="App container-fluid">
       <div className="row">
-        <div className="col left-panel px-0">
+        <div className="col left-panel">
           <FileSearch
             title="My Document"
             onFileSearch={(value) => {

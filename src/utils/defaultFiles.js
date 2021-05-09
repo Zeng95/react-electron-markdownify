@@ -10,6 +10,18 @@ const defaultFiles = [
     title: 'Second post',
     body: '## this is the title',
     createdAt: Date.now()
+  },
+  {
+    id: '3',
+    title: 'Third post',
+    body: '## this is the title',
+    createdAt: Date.now()
+  },
+  {
+    id: '4',
+    title: 'Forth post',
+    body: '## this is the title',
+    createdAt: Date.now()
   }
 ]
 
