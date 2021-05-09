@@ -1,5 +1,5 @@
 {
-  "name": "react-electron-markdown",
+  "name": "react-electron-markdownify",
   "version": "0.1.0",
   "description": "A Markdown Editor desktop application built on top of Electron and React.",
   "private": true,
