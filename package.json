@@ -1,27 +1,50 @@
 {
-  "name": "react-clod-doc",
+  "name": "react-electron-markdown",
   "version": "0.1.0",
+  "description": "A Markdown Editor desktop application built on top of Electron and React.",
   "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm start\" \"npm run electron-dev\"",
+    "start": "cross-env BROWSER=none craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "electron-dev": "wait-on http://localhost:3000 && electron ."
+  },
+  "main": "src/background.js",
   "dependencies": {
+    "@craco/craco": "^6.1.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
+    "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.1.10",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.1",
+    "auto-bind": "^4.0.0",
+    "bootstrap": "^5.0.0",
+    "colors": "^1.4.0",
+    "concurrently": "^6.1.0",
+    "consola": "^2.15.3",
+    "electron-localshortcut": "^3.2.1",
+    "i18next": "^20.2.2",
+    "lodash": "^4.17.21",
+    "q": "^1.5.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-i18next": "^11.8.15",
+    "react-scripts": "^4.0.3",
+    "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "devDependencies": {
+    "autoprefixer": "^9.8.6",
+    "cross-env": "^7.0.3",
+    "electron": "^11.1.0",
+    "electron-builder": "^22.9.1",
+    "electron-is-dev": "^2.0.0",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2",
+    "wait-on": "^5.2.0"
   },
   "browserslist": {
     "production": [
