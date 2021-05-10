@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import consola from 'consola'
+import useKeyPress from '@hooks/useKeyPress'
 import { useState, useEffect, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMarkdown } from '@fortawesome/free-brands-svg-icons'
@@ -9,6 +10,12 @@ function FileItem({ file }) {
   const [editValue, setEditValue] = useState('')
   const [editVisible, setEditVisible] = useState(false)
   const inputElem = useRef(null)
+  const enterPressed = useKeyPress(13)
+  const escPressed = useKeyPress(27)
+
+  function deleteFile() {
+    consola.info(file)
+  }
 
   function showEdit() {
     setEditValue(file.title)
@@ -20,37 +27,22 @@ function FileItem({ file }) {
     setEditVisible(false)
   }
 
-  function deleteFile() {
-    consola.info(file)
-  }
-
   function handleEditChange(event) {
     setEditValue(event.target.value)
   }
 
   useEffect(() => {
-    const handleEditKeyUp = (event) => {
-      const { keyCode } = event
-
-      if (keyCode === 13 && editVisible) {
-        // onFileSearch(searchValue)
-        hideEdit()
-      } else if (keyCode === 27 && editVisible) {
-        hideEdit()
-      }
-    }
-
-    const cleanup = () => {
-      document.removeEventListener('keyup', handleEditKeyUp)
-    }
-
     if (editVisible) {
       inputElem.current.focus()
     }
 
-    document.addEventListener('keyup', handleEditKeyUp)
+    if (enterPressed && editVisible) {
+      hideEdit()
+    }
 
-    return cleanup
+    if (escPressed && editVisible) {
+      hideEdit()
+    }
   })
 
   return (

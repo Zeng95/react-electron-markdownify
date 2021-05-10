@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import useKeyPress from '@hooks/useKeyPress'
 import { useState, useEffect, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
@@ -12,14 +13,16 @@ function FileSearch({ title, onFileSearch }) {
   const [searchValue, setSearchValue] = useState('')
   const [searchVisible, setSearchVisible] = useState(false)
   const inputElem = useRef(null)
+  const enterPressed = useKeyPress(13)
+  const escPressed = useKeyPress(27)
 
   function showSearch() {
     setSearchVisible(true)
   }
 
   function hideSearch() {
-    setSearchValue('')
     setSearchVisible(false)
+    setSearchValue('')
   }
 
   function handleSearchChange(event) {
@@ -27,31 +30,21 @@ function FileSearch({ title, onFileSearch }) {
   }
 
   useEffect(() => {
-    const handleSearchKeyUp = (event) => {
-      const { keyCode } = event
-
-      if (keyCode === 13 && searchVisible) {
-        onFileSearch(searchValue)
-      } else if (keyCode === 27 && searchVisible) {
-        hideSearch()
-      }
-    }
-
-    const cleanup = () => {
-      document.removeEventListener('keyup', handleSearchKeyUp)
-    }
-
     if (searchVisible) {
       inputElem.current.focus()
     }
 
-    document.addEventListener('keyup', handleSearchKeyUp)
+    if (enterPressed && searchVisible) {
+      onFileSearch(searchValue)
+    }
 
-    return cleanup
+    if (escPressed && searchVisible) {
+      hideSearch()
+    }
   })
 
   return (
-    <StyledFileSearch className="alert alert-primary d-flex justify-content-between align-items-center">
+    <StyledFileSearch className="alert alert-primary d-flex justify-content-between align-items-center mb-0">
       {!searchVisible && (
         <>
           {/* Title */}
