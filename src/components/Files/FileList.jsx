@@ -1,11 +1,19 @@
 import PropTypes from 'prop-types'
 import FileItem from './FileItem'
 
-function FileList({ files }) {
+function FileList({ files, onFileSave, onFileClick, onFileDelete }) {
   return (
-    <ul className="list-group list-group-flush">
+    <ul className="file-list list-group list-group-flush">
       {files.map((file) => {
-        return <FileItem file={file} key={file.id} />
+        return (
+          <FileItem
+            file={file}
+            key={file.id}
+            onFileSave={onFileSave}
+            onFileClick={onFileClick}
+            onFileDelete={onFileDelete}
+          />
+        )
       })}
     </ul>
   )
