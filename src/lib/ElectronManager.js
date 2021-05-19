@@ -1,4 +1,4 @@
-const { app, BrowserWindow, protocol } = require('electron')
+const { app, protocol, BrowserWindow } = require('electron')
 const { success, error } = require('consola')
 const Q = require('q')
 const localshortcut = require('electron-localshortcut')
@@ -61,12 +61,12 @@ class ElectronManager {
   }
 
   createWindow() {
-    // Create a browser window.
+    // Create a browser window
     let win = new BrowserWindow({
       width: 1024,
       height: 680,
       webPreferences: {
-        nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
+        nodeIntegration: true
       }
     })
 

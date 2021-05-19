@@ -14,10 +14,5 @@ const resolvedAliases = Object.fromEntries(
 module.exports = {
   webpack: {
     alias: resolvedAliases
-  },
-  style: {
-    postcss: {
-      plugins: [require('tailwindcss'), require('autoprefixer')]
-    }
   }
 }

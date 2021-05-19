@@ -27,6 +27,7 @@ function FileSearch({ title, onFileSearch }) {
 
   function handleSearchChange(event) {
     setSearchValue(event.target.value)
+    onFileSearch(event.target.value)
   }
 
   useEffect(() => {
@@ -48,10 +49,10 @@ function FileSearch({ title, onFileSearch }) {
       {!searchVisible && (
         <>
           {/* Title */}
-          <span>{title}</span>
+          <span className="title">{title}</span>
 
           {/* Search Button */}
-          <button type="button" onClick={showSearch}>
+          <button type="button" className="btn-search" onClick={showSearch}>
             <FontAwesomeIcon title="搜索" icon={faSearch} size="lg" />
           </button>
         </>

@@ -1,0 +1,14 @@
+.tab-item {
+  .nav-link {
+    &:hover,
+    &.active {
+      .icon-close {
+        visibility: visible;
+      }
+    }
+  }
+
+  .icon-close {
+    visibility: hidden;
+  }
+}

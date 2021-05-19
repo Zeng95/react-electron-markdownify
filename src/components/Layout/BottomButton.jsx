@@ -6,11 +6,11 @@ function ButtomButton({ icon, text, colorClass, handleBtnClick }) {
   return (
     <button
       type="button"
-      className={`btn btn-${colorClass} border-0 w-full rounded-0`}
+      className={`btn btn-${colorClass} w-100 border-0 rounded-0`}
       onClick={handleBtnClick}
     >
-      <FontAwesomeIcon title={text} icon={icon} size="lg" className="mr-2" />
-      {text}
+      <FontAwesomeIcon title={text} icon={icon} size="lg" className="me-2" />
+      <span>{text}</span>
     </button>
   )
 }

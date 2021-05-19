@@ -20,7 +20,10 @@ function FileList({ files, onFileSave, onFileClick, onFileDelete }) {
 }
 
 FileList.propTypes = {
-  files: PropTypes.array
+  files: PropTypes.array,
+  onFileSave: PropTypes.func,
+  onFileClick: PropTypes.func,
+  onFileDelete: PropTypes.func
 }
 
 FileList.defaultProps = {

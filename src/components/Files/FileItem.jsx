@@ -1,19 +1,24 @@
 import PropTypes from 'prop-types'
 import useKeyPress from '@hooks/useKeyPress'
+import styled from 'styled-components'
 import { useState, useEffect, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMarkdown } from '@fortawesome/free-brands-svg-icons'
 import { faEdit, faTrash, faTimes } from '@fortawesome/free-solid-svg-icons'
 
-function FileItem({ file, onFileDelete }) {
-  const [editValue, setEditValue] = useState('')
+const FileTitle = styled.div`
+  cursor: pointer;
+`
+
+function FileItem({ file, onFileSave, onFileClick, onFileDelete }) {
   const [editVisible, setEditVisible] = useState(false)
+  const [editValue, setEditValue] = useState('')
   const inputElem = useRef(null)
   const enterPressed = useKeyPress(13)
   const escPressed = useKeyPress(27)
 
   function showEdit() {
-    setEditValue(file.title)
+    setEditValue(file.title) 
     setEditVisible(true)
   }
 
@@ -33,6 +38,7 @@ function FileItem({ file, onFileDelete }) {
 
     if (enterPressed && editVisible) {
       hideEdit()
+      onFileSave(editValue)
     }
 
     if (escPressed && editVisible) {
@@ -41,7 +47,7 @@ function FileItem({ file, onFileDelete }) {
   })
 
   return (
-    <li className="file-item list-group-item bg-light">
+    <li className="file-item list-group-item">
       {!editVisible && (
         <div className="row d-flex align-items-center">
           {/* File Icon */}
@@ -50,12 +56,17 @@ function FileItem({ file, onFileDelete }) {
           </span>
 
           {/* File Title */}
-          <span className="col-6 cursor-pointer">{file.title}</span>
+          <FileTitle
+            className="col-4 col-xl-6 title"
+            onClick={() => onFileClick(file.id)}
+          >
+            {file.title}
+          </FileTitle>
 
           {/* Edit Button */}
           <button
             type="button"
-            className="col-2 btn btn-primary"
+            className="col-3 col-xl-2 btn btn-primary"
             onClick={showEdit}
           >
             <span className="me-2">编辑</span>
@@ -65,8 +76,8 @@ function FileItem({ file, onFileDelete }) {
           {/* Delete Button */}
           <button
             type="button"
-            className="col-2 btn btn-danger"
-            onClick={() => { onFileDelete(file.id) }}
+            className="col-3 col-xl-2 btn btn-danger"
+            onClick={() => onFileDelete(file.id)}
           >
             <span className="me-2">删除</span>
             <FontAwesomeIcon title="删除" icon={faTrash} size="lg" />
@@ -96,7 +107,10 @@ function FileItem({ file, onFileDelete }) {
 }
 
 FileItem.propTypes = {
-  file: PropTypes.object.isRequired
+  file: PropTypes.object.isRequired,
+  onFileSave: PropTypes.func,
+  onFileClick: PropTypes.func,
+  onFileDelete: PropTypes.func
 }
 
 export default FileItem
