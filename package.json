@@ -23,7 +23,6 @@
     "@testing-library/user-event": "^12.1.10",
     "auto-bind": "^4.0.0",
     "bootstrap": "^5.0.1",
-    "classnames": "^2.3.1",
     "colors": "^1.4.0",
     "concurrently": "^6.1.0",
     "consola": "^2.15.3",
