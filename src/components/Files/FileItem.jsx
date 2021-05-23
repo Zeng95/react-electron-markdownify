@@ -18,7 +18,7 @@ function FileItem({ file, onFileSave, onFileClick, onFileDelete }) {
   const escPressed = useKeyPress(27)
 
   function showEdit() {
-    setEditValue(file.title) 
+    setEditValue(file.title)
     setEditVisible(true)
   }
 

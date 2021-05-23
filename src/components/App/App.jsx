@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import './App.scss'
 
 const StartPage = styled.div.attrs({
-  className: "text-center"
+  className: 'text-center'
 })`
   font-size: 30px;
   height: 300px;
@@ -21,49 +21,65 @@ const StartPage = styled.div.attrs({
 
 function App() {
   const [files, setFiles] = useState(defaultFiles)
+  const [unsavedFileIds, setUnsavedFileIds] = useState([])
   const [activeFileId, setActiveFileId] = useState('')
   const [openFileIds, setOpenFileIds] = useState([])
-  const [unsavedFileIds, setUnsavedFileIds] = useState([])
 
-  const openFiles = openFileIds.map((openFileId) => {
-    return files.find((file) => file.Id === openFileId)
+  const openFiles = openFileIds.map(id => {
+    return files.find(file => file.id === id)
   })
 
-  const activeFile = openFileIds.find((file) => {
-    return file.Id === activeFileId
+  const activeFile = files.find(file => {
+    // If it returns true, the search is stopped, the item is returned. If nothing found, undefined is returned.
+    return file.id === activeFileId
   })
 
-  const openClickedFile = (value) => {
-    consola.info('Clicked File:', value)
+  // Open clicked files
+  const openFile = fileId => {
+    if (openFileIds.includes(fileId)) {
+      return false
+    }
+
+    setActiveFileId(fileId)
+    setOpenFileIds([...openFileIds, fileId])
   }
 
-  const fileSave = (value) => {
+  const saveFile = value => {
     consola.info('Save File:', value)
   }
 
-  const fileSearch = (value) => {
-    const newFiles = files.filter((file) => file.title.includes(value))
+  const searchFile = value => {
+    const newFiles = files.filter(file => file.title.includes(value))
     setFiles(newFiles)
   }
 
-  const fileDelete = (value) => {
+  const deleteFile = value => {
     consola.info('Delete File:', value)
   }
 
-  const fileCreate = (value) => {
+  const createFile = value => {
     consola.info('Create File:', value)
   }
 
-  const clickTab = (event, Id) => {
-    consola.info('Test Leo - Show Tab Id:', Id)
+  const clickTab = (event, id) => {
     event.preventDefault()
-    setActiveFileId(Id)
+    setActiveFileId(id)
   }
 
-  const closeTab = (event, Id) => {
-    consola.info('Test Leo - Close Tab Id:', Id)
+  const closeTab = (event, id) => {
     event.stopPropagation()
     event.preventDefault()
+
+    const tabsWithout = openFileIds.filter(fileId => fileId !== id)
+    const currentIndex = openFileIds.findIndex(fileId => fileId === id)
+    const prevFileId = openFileIds[currentIndex - 1]
+    const nextFileId = openFileIds[currentIndex + 1]
+
+    setOpenFileIds(tabsWithout)
+
+    if (tabsWithout.length > 0) {
+      currentIndex === 0 ? setActiveFileId(nextFileId) : setActiveFileId(prevFileId)
+    }
   }
 
   return (
@@ -71,16 +87,15 @@ function App() {
       <div className="row g-0">
         {/* Files Panel */}
         <div className="col-4 min-vh-100 position-relative bg-light">
-          <FileSearch onFileSearch={fileSearch} />
+          <FileSearch onFileSearch={searchFile} />
 
           <FileList
             files={files}
-            onFileSave={fileSave}
-            onFileClick={openClickedFile}
-            onFileDelete={fileDelete}
+            onFileSave={saveFile}
+            onFileClick={openFile}
+            onFileDelete={deleteFile}
           />
 
-          {/* Actions */}
           <div className="row g-0 button-group position-absolute w-100">
             {/* Create Button */}
             <div className="col-6">
@@ -88,7 +103,7 @@ function App() {
                 icon={faPlusSquare}
                 text="新建"
                 colorClass="primary"
-                handleBtnClick={fileCreate}
+                handleBtnClick={createFile}
               />
             </div>
 
@@ -105,9 +120,7 @@ function App() {
 
         {/* Editor Panel */}
         <div className="col-8">
-          {!activeFile && (
-            <StartPage>选择或者创建新的 Markdown 文档</StartPage>
-          )}
+          {!activeFile && <StartPage>选择或者创建新的 Markdown 文档</StartPage>}
 
           {activeFile && (
             <>
