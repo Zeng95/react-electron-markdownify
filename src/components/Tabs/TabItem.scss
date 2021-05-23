@@ -1,14 +1,43 @@
 .tab-item {
   .nav-link {
+    &.unsaved {
+      &:hover {
+        .icon-unsaved {
+          display: none;
+        }
+
+        .icon-close {
+          display: block;
+        }
+      }
+
+      .icon-unsaved {
+        display: block;
+      }
+
+      .icon-close {
+        display: none;
+      }
+    }
+
     &:hover,
     &.active {
       .icon-close {
         visibility: visible;
       }
     }
-  }
 
-  .icon-close {
-    visibility: hidden;
+    .icon-close {
+      visibility: hidden;
+    }
+
+    .icon-unsaved {
+      display: none;
+    }
+
+    .icon-unsaved {
+      width: 11px;
+      height: 11px;
+    }
   }
 }

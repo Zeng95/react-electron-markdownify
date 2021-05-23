@@ -5,11 +5,13 @@ function TabList({ files, activeId, unsavedIds, onTabClick, onTabClose }) {
   return (
     <ul className="tab-list nav nav-pills">
       {files.map((file) => {
+        const withUnsavedMark = unsavedIds.includes(file.id)
         return (
           <TabItem
             key={file.id}
             file={file}
             activeId={activeId}
+            isUnsaved={withUnsavedMark}
             onTabClick={onTabClick}
             onTabClose={onTabClose}
           />

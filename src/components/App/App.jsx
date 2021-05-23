@@ -21,7 +21,7 @@ const StartPage = styled.div.attrs({
 
 function App() {
   const [files, setFiles] = useState(defaultFiles)
-  const [unsavedFileIds, setUnsavedFileIds] = useState([])
+  const [unsavedFileIds, setUnsavedFileIds] = useState(["1", "2"])
   const [activeFileId, setActiveFileId] = useState('')
   const [openFileIds, setOpenFileIds] = useState([])
 

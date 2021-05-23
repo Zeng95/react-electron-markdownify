@@ -1,30 +1,40 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faCircle } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
-import classnames from 'classnames'
+import styled from 'styled-components'
 import './TabItem.scss'
 
-function TabItem({ file, activeId, onTabClick, onTabClose }) {
-  const navLinkClasses = classnames({
-    'nav-link': true,
-    active: file.id === activeId
-  })
+function TabItem({ file, activeId, isUnsaved, onTabClick, onTabClose }) {
+  const NavLink = styled.a.attrs({
+    className: `nav-link d-flex align-items-center ${file.id === activeId ? 'active' : ''} ${isUnsaved ? 'unsaved' : ''}`
+  })``
+
+  const handleClickOnLink = event => {
+    onTabClick(event, file.id)
+  }
+
+  const handleClickOnClose = event => {
+    onTabClose(event, file.id)
+  }
 
   return (
     <li className="tab-item nav-item">
-      <a
-        className={navLinkClasses}
-        href="https://www.google.com"
-        onClick={(event) => onTabClick(event, file.id)}
-      >
+      <NavLink href="https://www.google.com" onClick={handleClickOnLink}>
         <span className="me-2">{file.title}</span>
         <FontAwesomeIcon
           title="关闭"
           icon={faTimes}
           className="icon-close"
-          onClick={(event) => onTabClose(event, file.id)}
+          onClick={handleClickOnClose}
         />
-      </a>
+        {isUnsaved && (
+          <FontAwesomeIcon
+            title="未保存"
+            icon={faCircle}
+            className="icon-unsaved"
+          />
+        )}
+      </NavLink>
     </li>
   )
 }
